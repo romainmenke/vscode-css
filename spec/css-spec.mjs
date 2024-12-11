@@ -7315,6 +7315,7 @@ describe('CSS grammar', function () {
 				scopes: ['source.css', 'meta.property-list.css', 'meta.property-name.css', 'support.type.property-name.css']
 			});
 		});
+
 		describe('values', function () {
 			it('tokenizes color keywords', function () {
 				var tokens;
@@ -7322,6 +7323,34 @@ describe('CSS grammar', function () {
 				assert.deepStrictEqual(tokens[8], {
 					value: 'snow',
 					scopes: ['source.css', 'meta.property-list.css', 'meta.property-value.css', 'support.constant.color.w3c-extended-color-name.css']
+				});
+			});
+
+			it('tokenizes system color keywords', function () {
+				var tokens;
+				tokens = testGrammar.tokenizeLine('a { color: AccentColor; }').tokens;
+				assert.deepStrictEqual(tokens[7], {
+					value: 'AccentColor',
+					scopes: ['source.css', 'meta.property-list.css', 'meta.property-value.css', 'support.constant.color.system.css']
+				});
+			});
+
+			it('tokenizes deprecated system color keywords', function () {
+				var tokens;
+				tokens = testGrammar.tokenizeLine('a { color: background; }').tokens;
+				assert.deepStrictEqual(tokens[7], {
+					value: 'background',
+					scopes: ['source.css', 'meta.property-list.css', 'meta.property-value.css', 'invalid.deprecated.color.system.css']
+				});
+			});
+
+			// https://github.com/microsoft/vscode-css/issues/21
+			it.skip('does not confuse property names for deprecated color keywords', function () {
+				var tokens;
+				tokens = testGrammar.tokenizeLine('a { transition-property: background; }').tokens;
+				assert.deepStrictEqual(tokens[7], {
+					value: 'background',
+					scopes: ['source.css', 'meta.property-list.css', 'meta.property-value.css', 'support.constant.property-value.css']
 				});
 			});
 
