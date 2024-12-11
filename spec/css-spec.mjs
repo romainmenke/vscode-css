@@ -5523,8 +5523,7 @@ describe('CSS grammar', function () {
 			describe('@page', function () {
 
 				it('tokenises @page blocks correctly', function () {
-					var tokens;
-					tokens = testGrammar.tokenizeLine('@page :first { }').tokens;
+					var tokens = testGrammar.tokenizeLine('@page :first { }').tokens;
 					assert.deepStrictEqual(tokens[0], {
 						value: '@',
 						scopes: ['source.css', 'meta.at-rule.page.css', 'keyword.control.at-rule.page.css', 'punctuation.definition.keyword.css']
@@ -5559,7 +5558,7 @@ describe('CSS grammar', function () {
 					});
 				});
 
-				it.skip('tokenizes @page:right {} correctly', function () {
+				it('tokenizes @page:right{} correctly', function () {
 					var tokens = testGrammar.tokenizeLine('@page:right{}').tokens;
 					assert.deepStrictEqual(tokens[0], {
 						value: '@',
@@ -5611,7 +5610,7 @@ describe('CSS grammar', function () {
 					});
 				});
 
-				it.skip('tokenizes @page{} correctly', function () {
+				it('tokenizes @page{} correctly', function () {
 					var tokens = testGrammar.tokenizeLine('@page{}').tokens;
 					assert.deepStrictEqual(tokens[0], {
 						value: '@',
